@@ -11,11 +11,14 @@ cache:
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
+
 before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - export CHROME_BIN=chromium-browser
-  - npm i -g yarn
+  # Repo for Yarn
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
 install:
   - yarn
 
@@ -24,5 +27,6 @@ before_script:
 script:
   - yarn run lint
   - yarn test
+
 notifications:
   email: false
